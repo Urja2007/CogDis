@@ -1,0 +1,7 @@
+{
+  "direction": "refusal_direction.pt",
+  "layers": [12],
+  "method": "orthogonal_projection",
+  "formula": "W' = W - (r r^T) W",
+  "target_modules": ["o_proj", "down_proj"]
+}

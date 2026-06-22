@@ -1,0 +1,10 @@
+[
+  {
+    "component": "Attention (o_proj)",
+    "l2_change": 0.7745703458786011
+  },
+  {
+    "component": "MLP (down_proj)",
+    "l2_change": 1.7190583944320679
+  }
+]

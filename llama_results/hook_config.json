@@ -1,0 +1,9 @@
+{
+  "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+  "layers": [0, 12, 20, 25, 31],
+  "position": -1,
+  "hidden_size": 4096,
+  "dtype": "bfloat16",
+  "projection": "cosine_similarity",
+  "hook_module": "model.layers.[i].self_attn.o_proj"
+}

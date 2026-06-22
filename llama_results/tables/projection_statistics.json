@@ -1,0 +1,10 @@
+[
+    {
+        "Model": "Original",
+        "Layer12 Projection": 0.82
+    },
+    {
+        "Model": "Ablated",
+        "Layer12 Projection": 0.04
+    }
+]

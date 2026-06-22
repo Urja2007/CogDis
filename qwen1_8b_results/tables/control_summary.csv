@@ -1,0 +1,5 @@
+Model Variant,Ablation Type,Layer,Refusal Rate,Harm Recognition Accuracy,Avg Logit Difference,Samples
+Original,None,-,47%,50%,2.7,100
+Refusal Ablated,Refusal vector,15,28%,73%,2.7,100
+Random Ablation,Random vector,15,46%,49%,2.4,100
+Layer 25 Ablation,Refusal vector,25,46%,57%,2.4,100

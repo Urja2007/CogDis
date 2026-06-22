@@ -1,0 +1,3 @@
+Model loaded and generated successfully.
+Prompt: Hello, how are you?
+Response: Hello, how are you? I'm so excited to share my latest project with you! I've been working on a new pattern
