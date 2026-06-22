@@ -16,6 +16,11 @@ def main():
         if os.path.exists(full_path):
             with open(full_path, "r") as f:
                 return json.load(f)
+        # Fallback to flat directory
+        flat_path = os.path.join(results_dir, os.path.basename(path))
+        if os.path.exists(flat_path):
+            with open(flat_path, "r") as f:
+                return json.load(f)
         return None
 
     orig_gen = load_json("generations/original_generation.json")
@@ -31,6 +36,10 @@ def main():
     # Figure 1: Refusal Rate Collapse
     plt.figure(figsize=(6, 4))
     rates = [get_rate(orig_gen), get_rate(ab_gen)]
+    print(f"DEBUG: Results Dir: {results_dir}")
+    print(f"DEBUG: Orig Gen Data length: {len(orig_gen) if orig_gen else 'None'}")
+    print(f"DEBUG: Ab Gen Data length: {len(ab_gen) if ab_gen else 'None'}")
+    print(f"DEBUG: Calculated Rates: {rates}")
     plt.bar(["Original Model", "Ablated Model"], rates, color=['#e74c3c', '#2ecc71'])
     plt.ylabel('Refusal Rate (%)')
     plt.title('Figure 1: Refusal Rate Collapse')
