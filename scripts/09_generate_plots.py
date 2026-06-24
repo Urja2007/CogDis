@@ -36,11 +36,11 @@ def generate_plots():
     with open(stage2_ablated, "r") as f:
         meta_ablated = json.load(f)
         
-    meta_orig_A = [x for x in meta_orig if x["variant"] == "A"]
-    meta_ablated_A = [x for x in meta_ablated if x["variant"] == "A"]
+    meta_orig_B = [x for x in meta_orig if x["variant"] == "B"]
+    meta_ablated_B = [x for x in meta_ablated if x["variant"] == "B"]
     
-    orig_acc = sum(1 for x in meta_orig_A if x["is_correct"]) / max(1, len(meta_orig_A))
-    ablated_acc = sum(1 for x in meta_ablated_A if x["is_correct"]) / max(1, len(meta_ablated_A))
+    orig_acc = sum(1 for x in meta_orig_B if x["is_correct"]) / max(1, len(meta_orig_B))
+    ablated_acc = sum(1 for x in meta_ablated_B if x["is_correct"]) / max(1, len(meta_ablated_B))
     
     plt.figure(figsize=(8, 6))
     bar_width = 0.35
@@ -50,7 +50,7 @@ def generate_plots():
     acc_rates = [orig_acc * 100, ablated_acc * 100]
     
     plt.bar([p - bar_width/2 for p in x], refusal_rates, width=bar_width, color='#3498db', label='Refusal Rate (Behavior)')
-    plt.bar([p + bar_width/2 for p in x], acc_rates, width=bar_width, color='#e74c3c', label='Harm Recognition (Understanding)')
+    plt.bar([p + bar_width/2 for p in x], acc_rates, width=bar_width, color='#e74c3c', label='Harm Recognition (Variant B1)')
     
     plt.xticks(x, ['Original Model', 'Ablated Model'])
     plt.ylabel('Percentage (%)')
@@ -63,15 +63,15 @@ def generate_plots():
     
     # --- Plot 2: Logit Distribution ---
     plt.figure(figsize=(8, 6))
-    orig_logits = [x["logit_difference"] for x in meta_orig_A]
-    ablated_logits = [x["logit_difference"] for x in meta_ablated_A]
+    orig_logits = [x["logit_difference"] for x in meta_orig_B]
+    ablated_logits = [x["logit_difference"] for x in meta_ablated_B]
     
     sns.kdeplot(orig_logits, fill=True, color='#3498db', label='Original Model')
     sns.kdeplot(ablated_logits, fill=True, color='#e74c3c', label='Ablated Model')
     plt.axvline(0, color='black', linestyle='--')
     plt.xlabel('Logit Difference (Harmful - Safe)')
     plt.ylabel('Density')
-    plt.title('Confidence in Classifying Harm (Meta-Evaluation)')
+    plt.title('Confidence in Classifying Harm (Variant B1)')
     plt.legend()
     plt.savefig(os.path.join(plots_dir, "02_logit_distribution.png"), dpi=300)
     plt.close()
@@ -107,30 +107,35 @@ def generate_plots():
         plt.close()
         print("Generated 03_layerwise_reemergence.png")
 
-    # --- Plot 4: Confusion Matrix ---
+    # --- Plot 4: Confusion Matrices (All 6 Variants) ---
     confusion_path = os.path.join(results_dir, "meta_eval_confusion.json")
     if os.path.exists(confusion_path):
         with open(confusion_path, "r") as f:
             confusion_data = json.load(f)
             
-        # Filter for Variant A (Direct classification)
-        data_A = [x for x in confusion_data if x["variant"] == "A"]
-        
-        y_true = [x["true_label"] for x in data_A]
-        y_pred = [x["predicted_class"] for x in data_A]
-        
+        variants = ["B1", "B2", "B3", "A1", "A2", "A3"]
         labels = ["Harmful", "Safe"]
-        cm = confusion_matrix(y_true, y_pred, labels=labels)
         
-        plt.figure(figsize=(6, 5))
-        sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=labels, yticklabels=labels, cbar=False, annot_kws={"size": 16})
-        plt.xlabel('Predicted Label', fontsize=12)
-        plt.ylabel('Actual Label', fontsize=12)
-        plt.title('Ablated Model: Semantic Harm Recognition\nConfusion Matrix', fontsize=14)
-        plt.tight_layout()
-        plt.savefig(os.path.join(plots_dir, "04_confusion_matrix.png"), dpi=300)
-        plt.close()
-        print("Generated 04_confusion_matrix.png")
+        for v in variants:
+            data_v = [x for x in confusion_data if x["variant"] == v]
+            if not data_v:
+                continue
+                
+            y_true = [x["true_label"] for x in data_v]
+            y_pred = [x["predicted_class"] for x in data_v]
+            
+            cm = confusion_matrix(y_true, y_pred, labels=labels)
+            
+            plt.figure(figsize=(6, 5))
+            sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=labels, yticklabels=labels, cbar=False, annot_kws={"size": 16})
+            plt.xlabel('Predicted Label', fontsize=12)
+            plt.ylabel('Actual Label', fontsize=12)
+            plt.title(f'Ablated Model Confusion Matrix\nVariant {v}', fontsize=14)
+            plt.tight_layout()
+            plt.savefig(os.path.join(plots_dir, f"04_confusion_matrix_{v}.png"), dpi=300)
+            plt.close()
+            
+        print("Generated all 6 confusion matrices!")
 
     print("Generated 01_refusal_vs_recognition.png")
     print("Generated 02_logit_distribution.png")

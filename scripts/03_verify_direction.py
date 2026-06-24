@@ -38,25 +38,48 @@ def verify():
         print("Individual cosine values not found in stats. Skipping advanced plots.")
         return
         
-    # 1. Scatter Plot
+    # 1. 3-Color Scatter Plot
     plt.figure(figsize=(8, 5))
-    x_harmful = np.random.normal(1, 0.04, len(harmful_cosines)) # Jitter for visibility
+    
+    # We know the first 100 are JBB, the rest (520) are AdvBench
+    jbb_cosines = harmful_cosines[:100]
+    advbench_cosines = harmful_cosines[100:]
+    
+    x_jbb = np.random.normal(1, 0.04, len(jbb_cosines))
+    x_advbench = np.random.normal(1, 0.04, len(advbench_cosines))
     x_harmless = np.random.normal(2, 0.04, len(harmless_cosines))
     
-    plt.scatter(x_harmful, harmful_cosines, color='red', alpha=0.6, label='Harmful Prompts')
-    plt.scatter(x_harmless, harmless_cosines, color='blue', alpha=0.6, label='Harmless Prompts')
+    plt.scatter(x_jbb, jbb_cosines, color='#e74c3c', alpha=0.8, label='JailbreakBench (Harmful)')
+    plt.scatter(x_advbench, advbench_cosines, color='#e67e22', alpha=0.6, label='AdvBench (Harmful)')
+    plt.scatter(x_harmless, harmless_cosines, color='#3498db', alpha=0.6, label='Alpaca (Harmless)')
     
     plt.axhline(y=np.mean(harmful_cosines), color='darkred', linestyle='--', label='Harmful Mean')
     plt.axhline(y=np.mean(harmless_cosines), color='darkblue', linestyle='--', label='Harmless Mean')
     
     plt.xticks([1, 2], ['Harmful', 'Harmless'])
     plt.ylabel('Cosine Similarity to Refusal Vector')
-    plt.title('Scatter Plot: Projection onto Refusal Direction')
+    plt.title('Scatter Plot: Projection onto Refusal Direction (3-Sources)')
     plt.legend()
     plt.grid(True, alpha=0.3)
-    plt.savefig(os.path.join(plots_dir, "verification_scatter.png"))
+    plt.savefig(os.path.join(plots_dir, "verification_scatter.png"), dpi=300)
     plt.close()
 
+    # 1.5 Vector Dimension Visualization
+    import torch
+    vector_path = os.path.join(config.get_results_dir(), "refusal_direction.pt")
+    if os.path.exists(vector_path):
+        vector = torch.load(vector_path, map_location="cpu")
+        weights = vector.float().numpy().flatten()
+        
+        plt.figure(figsize=(10, 5))
+        plt.hist(weights, bins=100, color='purple', alpha=0.7)
+        plt.axvline(0, color='black', linestyle='--')
+        plt.xlabel('Weight Magnitude')
+        plt.ylabel('Frequency')
+        plt.title(f'Refusal Vector Weight Distribution ({len(weights)} Dimensions)')
+        plt.grid(True, alpha=0.3)
+        plt.savefig(os.path.join(plots_dir, "refusal_vector_dimensions.png"), dpi=300)
+        plt.close()
     # 2. Histogram
     plt.figure(figsize=(8, 5))
     plt.hist(harmful_cosines, bins=20, alpha=0.5, color='red', label='Harmful')

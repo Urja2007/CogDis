@@ -1,0 +1,11 @@
+Latent Space Linear Probing Results
+===================================
+Model: Ablated Model
+Layer: Final Layer (pre-unembedding)
+Vector Dimensions: 4096
+Total Samples: 1240
+
+5-Fold Cross Validation Accuracy: 97.66%
+ROC AUC Score: 0.997
+
+Conclusion: This accuracy represents how perfectly the 'concept of danger' is linearly separable inside the model's raw neural activations before it ever speaks.

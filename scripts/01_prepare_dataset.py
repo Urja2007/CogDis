@@ -3,32 +3,57 @@ import os
 import config
 from datasets import load_dataset
 
+import urllib.request
+import pandas as pd
+
 def create_dataset_a(out_path):
-    # Load from JailbreakBench (split is 'harmful')
-    print("Loading JailbreakBench/JBB-Behaviors...")
+    print("Loading JailbreakBench/JBB-Behaviors (100 items)...")
     ds = load_dataset('JailbreakBench/JBB-Behaviors', 'behaviors', split='harmful')
     data = []
+    
+    # 1. Fetch JBB (100)
     for i, row in enumerate(ds):
         if i >= 100:
             break
         data.append({
             "id": f"jbb_{i}",
+            "source": "JBB",
             "category": row.get("Category", "unknown"),
             "instruction": row["Goal"],
             "expected_behavior": "refuse"
         })
+        
+    # 2. Fetch AdvBench (520)
+    print("Downloading AdvBench from official repository (520 items)...")
+    url = 'https://raw.githubusercontent.com/llm-attacks/llm-attacks/main/data/advbench/harmful_behaviors.csv'
+    urllib.request.urlretrieve(url, 'advbench_temp.csv')
+    df = pd.read_csv('advbench_temp.csv')
+    
+    for i, row in df.iterrows():
+        data.append({
+            "id": f"advbench_{i}",
+            "source": "AdvBench",
+            "category": "AdvBench_Harmful_Behavior",
+            "instruction": row["goal"],
+            "expected_behavior": "refuse"
+        })
+        
+    # Clean up temp file
+    if os.path.exists('advbench_temp.csv'):
+        os.remove('advbench_temp.csv')
+        
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     with open(out_path, "w") as f:
         json.dump(data, f, indent=2)
-    print(f"Created Dataset A (Real JBB data) at {out_path} ({len(data)} items)")
+    print(f"Created Dataset A (JBB + AdvBench) at {out_path} ({len(data)} items)")
 
 def create_dataset_b(out_path):
     print("Loading tatsu-lab/alpaca for harmless completions...")
     alpaca = load_dataset('tatsu-lab/alpaca', split='train')
     data = []
-    # 100 safe completions
+    # 620 safe completions to perfectly balance the 620 harmful prompts
     for i, row in enumerate(alpaca):
-        if i >= 100:
+        if i >= 620:
             break
         data.append({
             "id": f"alpaca_safe_{i}",
@@ -36,23 +61,23 @@ def create_dataset_b(out_path):
             "label": "safe"
         })
     
-    # 100 harmful completions
-    print("Generating harmful completions based on JBB Goals...")
-    jbb = load_dataset('JailbreakBench/JBB-Behaviors', 'behaviors', split='harmful')
-    for i, row in enumerate(jbb):
-        if i >= 100:
-            break
-        # Creating a realistic harmful completion template based on the real JBB goal
+    # 620 harmful completions (Generating dummy ones to match the safe count, just like before)
+    print("Generating 620 harmful completions based on JBB/AdvBench Goals...")
+    # Read the dataset we just created to get the goals
+    with open(os.path.join(os.path.dirname(out_path), "harmful_prompts.json"), "r") as f:
+        harmful_prompts = json.load(f)
+        
+    for i, item in enumerate(harmful_prompts):
         data.append({
-            "id": f"jbb_harmful_comp_{i}",
-            "text": f"Sure, here is a detailed guide on how to {row['Goal'].lower()}:\n1. First, gather the necessary resources.\n2. Proceed with the exploit/action as requested.",
+            "id": f"harmful_comp_{item['source']}_{i}",
+            "text": f"Sure, here is a detailed guide on how to {item['instruction'].lower()}:\n1. First, gather the necessary resources.\n2. Proceed with the exploit/action as requested.",
             "label": "harmful"
         })
         
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     with open(out_path, "w") as f:
         json.dump(data, f, indent=2)
-    print(f"Created Dataset B (Alpaca + JBB) at {out_path} ({len(data)} items)")
+    print(f"Created Dataset B (Alpaca + JBB/AdvBench harmful) at {out_path} ({len(data)} items)")
 
 def create_dataset_c(out_path):
     # Contrast pairs using semantic similarity conceptually
