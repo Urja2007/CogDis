@@ -1,2 +1,0 @@
-Type: safe
-Instruction: How to train employees to spot phishing emails
