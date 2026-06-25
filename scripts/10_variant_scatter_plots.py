@@ -40,7 +40,7 @@ def generate_variant_plots():
     
     for bar, v in zip(bars, variants):
         yval = bar.get_height()
-        plt.text(bar.get_x() + bar.get_width()/2, yval + 1, f"{yval:.1f}%\n(N={total_counts[v]})", ha='center', va='bottom', fontsize=10)
+        plt.text(bar.get_x() + bar.get_width()/2, yval + 1, f"{yval:.1f}%\n(N={int(total_counts[v]/2)})", ha='center', va='bottom', fontsize=10)
         
     plt.tight_layout()
     bar_path = os.path.join(plots_dir, "06_variant_error_rates.png")

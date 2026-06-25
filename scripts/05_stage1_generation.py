@@ -27,21 +27,39 @@ def check_refusal(text):
 def generate_responses(model_path, prompts_data, output_file):
     print(f"\nLoading model from {model_path}...")
     tokenizer = AutoTokenizer.from_pretrained(model_path)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+    tokenizer.padding_side = "left"
+    
     dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
     model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=dtype, device_map="auto")
     
-    results = []
-    print(f"Generating for {len(prompts_data)} prompts (Batch Size = 1)...")
+    batch_size = getattr(config, 'BATCH_SIZE', 1)
+    print(f"Generating for {len(prompts_data)} prompts (Batch Size = {batch_size})...")
     
-    for item in prompts_data:
-        prompt_id = item.get("id", item.get("prompt_id", "unknown"))
-        instruction = item.get("instruction", item.get("text", ""))
+    results = []
+    if os.path.exists(output_file):
+        try:
+            with open(output_file, "r") as f:
+                results = json.load(f)
+            print(f"Resuming from {len(results)} previously saved completions.")
+        except Exception as e:
+            print(f"Could not load previous results: {e}")
+            
+    completed_ids = {r["prompt_id"] for r in results}
+    prompts_to_do = [p for p in prompts_data if p.get("id", p.get("prompt_id", "unknown")) not in completed_ids]
+    
+    for i in range(0, len(prompts_to_do), batch_size):
+        batch_items = prompts_to_do[i:i+batch_size]
+        batch_texts = []
+        for item in batch_items:
+            instruction = item.get("instruction", item.get("text", ""))
+            messages = [{"role": "user", "content": instruction}]
+            text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+            batch_texts.append(text)
+            
+        inputs = tokenizer(batch_texts, return_tensors="pt", padding=True).to(model.device)
         
-        messages = [{"role": "user", "content": instruction}]
-        text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-        inputs = tokenizer(text, return_tensors="pt").to(model.device)
-        
-        # Phase 3 constraints: max_tokens = 1024
         max_new_tokens = 1024
         with torch.no_grad():
             outputs = model.generate(
@@ -51,30 +69,29 @@ def generate_responses(model_path, prompts_data, output_file):
                 temperature=config.TEMPERATURE if config.DO_SAMPLE else None,
                 pad_token_id=tokenizer.eos_token_id
             )
-        
-        input_length = inputs.input_ids.shape[1]
-        generated_ids = outputs[0][input_length:]
-        completion = tokenizer.decode(generated_ids, skip_special_tokens=True)
-        
-        finish_reason = "length" if len(generated_ids) == max_new_tokens else "stop"
             
-        results.append({
-            "prompt_id": prompt_id,
-            "completion": completion.strip(),
-            "token_count": len(generated_ids),
-            "refusal_score": check_refusal(completion),
-            "finish_reason": finish_reason
-        })
-        
-        # Aggressive GPU cleanup after every prompt
-        del inputs, outputs, generated_ids
+        for j, item in enumerate(batch_items):
+            prompt_id = item.get("id", item.get("prompt_id", "unknown"))
+            generated_ids = outputs[j][inputs.input_ids.shape[1]:]
+            completion = tokenizer.decode(generated_ids, skip_special_tokens=True)
+            finish_reason = "length" if len(generated_ids) == max_new_tokens else "stop"
+            
+            results.append({
+                "prompt_id": prompt_id,
+                "completion": completion.strip(),
+                "token_count": len(generated_ids),
+                "refusal_score": check_refusal(completion),
+                "finish_reason": finish_reason
+            })
+            
+        # Incremental save
+        with open(output_file, "w") as f:
+            json.dump(results, f, indent=2)
+            
+        del inputs, outputs
         torch.cuda.empty_cache()
 
-    with open(output_file, "w") as f:
-        json.dump(results, f, indent=2)
-        
-    print(f"Saved {len(results)} completions to {output_file}")
-    
+    print(f"Saved {len(results)} total completions to {output_file}")
     del model
     del tokenizer
     torch.cuda.empty_cache()

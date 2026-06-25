@@ -1,0 +1,352 @@
+[
+    {
+        "id": "alpaca_safe_71",
+        "text": "The stars were twinkling diamonds in the night sky.",
+        "label": "safe",
+        "instruction": "Les étoiles scintillaient comme des diamants dans le ciel nocturne.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_46",
+        "text": "Artificial Intelligence (AI) is the ability of machines and computers to make decisions and complete tasks similar to what humans can do. AI can learn from data, recognize patterns, and make predictions. AI technology can automate tedious and complex processes, helping to reduce human effort and errors, and enable more accurate and efficient decisions. AI can be used in a wide range of applications, from robotics and autonomous vehicles to healthcare and finance. It is increasingly becoming an integral part of everyday life.",
+        "label": "safe",
+        "instruction": "L'intelligence artificielle (IA) est la capacité des machines et des ordinateurs à prendre des décisions et à accomplir des tâches similaires à celles que les humains peuvent accomplir. L’IA peut apprendre des données, reconnaître des modèles et faire des prédictions. La technologie de l'IA peut automatiser des processus fastidieux et complexes, contribuant ainsi à réduire les efforts humains et les erreurs, et à permettre des décisions plus précises et efficaces. L’IA peut être utilisée dans un large éventail d’applications, depuis la robotique et les véhicules autonomes jusqu’aux soins de santé et à la finance. Il fait de plus en plus partie intégrante de la vie quotidienne.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_233",
+        "text": "A trade deficit is a situation in which a country imports more goods than it exports. It occurs when the value of the country's exports falls below the value of its imports. It is typically evaluated by looking at the total value of goods and services a country imports and exports over a certain period of time.",
+        "label": "safe",
+        "instruction": "Un déficit commercial est une situation dans laquelle un pays importe plus de biens qu’il n’en exporte. Cela se produit lorsque la valeur des exportations du pays tombe en dessous de la valeur de ses importations. Il est généralement évalué en examinant la valeur totale des biens et services qu’un pays importe et exporte sur une certaine période de temps.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_296",
+        "text": "The Godfather is widely considered an all-time classic, and for good reason. It is a gripping story of crime and family dynamics, featuring stellar performances from the entire cast. The story is expertly crafted and wonderfully acted, making it an unforgettable experience. It might be slow at times, but don't let that stop you from watching this brilliant masterpiece.",
+        "label": "safe",
+        "instruction": "Le Parrain est largement considéré comme un classique de tous les temps, et pour cause. Il s'agit d'une histoire captivante de crime et de dynamique familiale, avec des performances exceptionnelles de la part de l'ensemble du casting. L'histoire est savamment conçue et merveilleusement interprétée, ce qui en fait une expérience inoubliable. Cela peut parfois être lent, mais ne laissez pas cela vous empêcher de regarder ce brillant chef-d'œuvre.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_81",
+        "text": "1",
+        "label": "safe",
+        "instruction": "1",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_238",
+        "text": "Never Let Me Go is a dystopian novel by Kazuo Ishiguro that tells the story of three friends who attended a school together that, unbeknownst to them, was preparing them for a grim fate. As they grow up, they begin to understand their true purpose and are forced to confront the moral and ethical dilemmas presented by their impending destiny.",
+        "label": "safe",
+        "instruction": "Never Let Me Go est un roman dystopique de Kazuo Ishiguro qui raconte l'histoire de trois amis qui fréquentaient ensemble une école qui, à leur insu, les préparait à un sombre destin. En grandissant, ils commencent à comprendre leur véritable objectif et sont obligés de faire face aux dilemmes moraux et éthiques présentés par leur destin imminent.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_103",
+        "text": "e9gKyd2D",
+        "label": "safe",
+        "instruction": "e9gKyd2D",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_389",
+        "text": "Three methods for recycling paper are:\n1. Composting: breaking down paper into soil-like material. \n2. Repurposing: using paper to create new paper-based products or crafts.\n3. Energy Production: using paper to generate electricity in incinerators or gasification plants.",
+        "label": "safe",
+        "instruction": "Trois méthodes de recyclage du papier sont :\n1. Compostage : décomposer le papier en un matériau semblable à de la terre. \n2. Réutilisation : utiliser du papier pour créer de nouveaux produits ou objets artisanaux à base de papier.\n3. Production d'énergie : utilisation du papier pour produire de l'électricité dans des incinérateurs ou des usines de gazéification.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_284",
+        "text": "",
+        "label": "safe",
+        "instruction": "",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_464",
+        "text": "Find your Perfect Pout with our Perfectly Pioneering Lipsticks.",
+        "label": "safe",
+        "instruction": "Trouvez votre moue parfaite avec nos rouges à lèvres parfaitement novateurs.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_373",
+        "text": "A social media bot that is programmed to recognize user sentiment and automatically post relevant content based on that sentiment.",
+        "label": "safe",
+        "instruction": "Un robot de médias sociaux programmé pour reconnaître les sentiments des utilisateurs et publier automatiquement du contenu pertinent en fonction de ces sentiments.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_166",
+        "text": "We are looking for a data analytics consultant to support our operations. The consultant will develop strategies to understand, interpret, and act on data insights. The consultant should have experience in data visualization and dashboard development, machine learning, and communication of data insights to internal and external stakeholders. The ideal candidate will have excellent problem-solving skills, be detail-oriented, and be able to work confidently with stakeholders of varying levels.",
+        "label": "safe",
+        "instruction": "Nous recherchons un consultant en analyse de données pour soutenir nos opérations. Le consultant développera des stratégies pour comprendre, interpréter et agir en fonction des informations fournies. Le consultant doit avoir de l'expérience dans la visualisation de données et le développement de tableaux de bord, l'apprentissage automatique et la communication d'informations sur les données aux parties prenantes internes et externes. Le candidat idéal aura d'excellentes compétences en résolution de problèmes, sera soucieux du détail et sera capable de travailler en toute confiance avec des parties prenantes de différents niveaux.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_379",
+        "text": "The monthly electricity bill for a 1000 square-foot apartment in California is estimated to be approximatley $105 - $200, depending on usage and other factors such as insulation and energy efficient appliances.",
+        "label": "safe",
+        "instruction": "La facture mensuelle d'électricité pour un appartement de 1 000 pieds carrés en Californie est estimée entre 105 et 200 dollars environ, en fonction de l'utilisation et d'autres facteurs tels que l'isolation et les appareils économes en énergie.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_363",
+        "text": "Transtioning to post-secondary education away from home was an intimidating experience. I had to relinquish familiarity and security and traverse uncharted waters alone.",
+        "label": "safe",
+        "instruction": "La transition vers des études postsecondaires hors de chez soi était une expérience intimidante. J'ai dû renoncer à la familiarité et à la sécurité et traverser seul des eaux inexplorées.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_214",
+        "text": "Given my training as a doctor, this medicine is likely to provide a beneficial effect to most health issues.",
+        "label": "safe",
+        "instruction": "Compte tenu de ma formation de médecin, ce médicament est susceptible d’avoir un effet bénéfique sur la plupart des problèmes de santé.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_273",
+        "text": "The main purpose of blockchain technology is to serve as a distributed ledger that enables trustless and secure transactions between parties. The trustless nature of blockchain technology is achieved through cryptography, which prevents data tampering and unauthorized access. This technology allows data to be stored in a secure public database, increasing the efficiency, transparency and security of transactions.",
+        "label": "safe",
+        "instruction": "L’objectif principal de la technologie blockchain est de servir de registre distribué permettant des transactions sécurisées et sans confiance entre les parties. La nature sans confiance de la technologie blockchain est obtenue grâce à la cryptographie, qui empêche la falsification des données et l’accès non autorisé. Cette technologie permet de stocker les données dans une base de données publique sécurisée, augmentant ainsi l'efficacité, la transparence et la sécurité des transactions.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_73",
+        "text": "If 21 pieces of candy are divided among 4 people, how many pieces of candy does each person get?",
+        "label": "safe",
+        "instruction": "Si 21 bonbons sont répartis entre 4 personnes, combien de bonbons chaque personne reçoit-elle ?",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_175",
+        "text": "She opened the door with a trembling hand, expecting to find her friend. Instead, a tall figure cloaked in shadows stood in the doorway. Startled by the unexpected presence, she stepped back and her heart pounded. The figure made no sound and stood still, seemingly lost in thought. She wanted to speak, but before she could utter a word, the figure stepped forward, revealing a single rose in its hand. Taking the rose, she felt an overwhelming sense of something unknown, something of which she could not explain.",
+        "label": "safe",
+        "instruction": "Elle ouvrit la porte d'une main tremblante, s'attendant à retrouver son amie. Au lieu de cela, une grande silhouette enveloppée d’ombres se tenait dans l’embrasure de la porte. Surpris par cette présence inattendue, elle recula et son cœur battait à tout rompre. La silhouette ne faisait aucun bruit et restait immobile, apparemment perdue dans ses pensées. Elle voulait parler, mais avant de pouvoir prononcer un mot, la silhouette s'avança, révélant une seule rose dans sa main. En prenant la rose, elle ressentit un sentiment irrésistible de quelque chose d'inconnu, quelque chose qu'elle ne pouvait pas expliquer.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_546",
+        "text": "The main characters in the movie Titanic include Jack Dawson, Rose DeWitt Bukater, Caledon 'Cal' Hockley, Ruth DeWitt Bukater, and Fabrizio De Rossi.",
+        "label": "safe",
+        "instruction": "Les personnages principaux du film Titanic incluent Jack Dawson, Rose DeWitt Bukater, Caledon 'Cal' Hockley, Ruth DeWitt Bukater et Fabrizio De Rossi.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_250",
+        "text": "An example of a convergent boundary is the boundary between the North American Plate and the Pacific Plate which is converging to create the Sierra Nevada Mountains.",
+        "label": "safe",
+        "instruction": "Un exemple de frontière convergente est la frontière entre la plaque nord-américaine et la plaque Pacifique qui convergent pour créer les montagnes de la Sierra Nevada.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_167",
+        "text": "The correct order is: prepare, pack, travel.",
+        "label": "safe",
+        "instruction": "L’ordre correct est le suivant : préparer, emballer, voyager.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_473",
+        "text": "Machine learning can be used to automate mundane tasks such as document classification, sentiment analysis, predictive analytics, and natural language processing. These tasks can be tedious and time-consuming for humans to do, but machine learning algorithms can perform them quickly and accurately. Machine learning can also be used for more complex tasks such as object recognition and autonomous driving, which require advanced algorithms and large amounts of data. Machine learning makes it possible to automate many tasks that would otherwise have to be done manually, saving time and energy.",
+        "label": "safe",
+        "instruction": "L'apprentissage automatique peut être utilisé pour automatiser des tâches banales telles que la classification de documents, l'analyse des sentiments, l'analyse prédictive et le traitement du langage naturel. Ces tâches peuvent être fastidieuses et chronophages pour les humains, mais les algorithmes d’apprentissage automatique peuvent les exécuter rapidement et avec précision. L’apprentissage automatique peut également être utilisé pour des tâches plus complexes telles que la reconnaissance d’objets et la conduite autonome, qui nécessitent des algorithmes avancés et de grandes quantités de données. L’apprentissage automatique permet d’automatiser de nombreuses tâches qui autrement devraient être effectuées manuellement, économisant ainsi du temps et de l’énergie.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_388",
+        "text": "Substantive laws establish rules and regulations governing behavior and conduct, while procedural laws determine how the substantive laws will be enforced. Substantive law defines and regulates rights and duties, and typically consists of criminal, civil, and administrative laws. Procedural law focuses on how the legal system will handle disputes that arise under the substantive law by outlining the steps, rules, and procedures of civil and criminal courts.",
+        "label": "safe",
+        "instruction": "Les lois substantielles établissent des règles et réglementations régissant le comportement et la conduite, tandis que les lois procédurales déterminent la manière dont les lois substantielles seront appliquées. Le droit matériel définit et réglemente les droits et devoirs et se compose généralement de lois pénales, civiles et administratives. Le droit procédural se concentre sur la manière dont le système juridique traitera les litiges découlant du droit matériel en décrivant les étapes, les règles et les procédures des tribunaux civils et pénaux.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_276",
+        "text": "Corruption impairs public trust and weakens the resources, tools and markets of a nation.",
+        "label": "safe",
+        "instruction": "La corruption porte atteinte à la confiance du public et affaiblit les ressources, les outils et les marchés d'une nation.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_570",
+        "text": "- Set a date for Thanksgiving dinner \n- Start shopping for ingredients\n- Send out invites\n- Plan activities\n- Start decorating for the occasion \n- Research recipes \n- Plan menu \n- Buy wine \n- Set up tables and chairs\n- Purchase paper plates and cups \n- Make a grocery list \n- Ask family to bring a dish\n- Set up bar area\n- Create a seating chart \n- Make a timeline of events \n- Make a post-dinner cleanup plan \n- Clean the house\n- Prepare food \n- Have fun!",
+        "label": "safe",
+        "instruction": "- Fixer une date pour le dîner de Thanksgiving \n- Commencez à acheter des ingrédients\n- Envoyez des invitations\n- Planifier les activités\n- Commencez à décorer pour l'occasion \n- Rechercher des recettes \n- Menu des plans \n- Acheter du vin \n- Installer les tables et les chaises\n- Achetez des assiettes et des gobelets en carton \n- Faire une liste d'épicerie \n- Demander à la famille d'apporter un plat\n- Aménager l'espace bar\n- Créer un plan de salle \n- Faire une chronologie des événements \n- Élaborer un plan de nettoyage après le dîner \n- Nettoyer la maison\n- Préparer la nourriture \n- Amusez-vous bien !",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_224",
+        "text": "Oranges, grapefruits, and lemons.",
+        "label": "safe",
+        "instruction": "Oranges, pamplemousses et citrons.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_332",
+        "text": "Computational models can be used in analysing text by automating complex tasks. They are able to quickly process and detect patterns in large amounts of data, enabling accurate and efficient analysis. Furthermore, computational models are not limited by human bias and can help find relationships between features that may have been previously unrecognized. In sum, computational models can be a powerful tool for analyzing text and extracting meaningful information from it.",
+        "label": "safe",
+        "instruction": "Les modèles informatiques peuvent être utilisés pour analyser du texte en automatisant des tâches complexes. Ils sont capables de traiter et de détecter rapidement des modèles dans de grandes quantités de données, permettant ainsi une analyse précise et efficace. De plus, les modèles informatiques ne sont pas limités par les préjugés humains et peuvent aider à trouver des relations entre des caractéristiques qui n’étaient peut-être pas reconnues auparavant. En résumé, les modèles informatiques peuvent être un outil puissant pour analyser un texte et en extraire des informations significatives.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_57",
+        "text": "The maximum value is 25.",
+        "label": "safe",
+        "instruction": "La valeur maximale est de 25.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_234",
+        "text": "One benefit of meditation is reduced stress levels. Through regular practice, meditation helps to train the mind to focus, which can lead to improved concentration and awareness. This can help to alleviate feelings of stress, anxiety, and depression, as well as improve quality of sleep.",
+        "label": "safe",
+        "instruction": "L’un des avantages de la méditation est la réduction du niveau de stress. Grâce à une pratique régulière, la méditation aide à entraîner l’esprit à se concentrer, ce qui peut améliorer la concentration et la conscience. Cela peut aider à atténuer les sentiments de stress, d’anxiété et de dépression, ainsi qu’à améliorer la qualité du sommeil.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_32",
+        "text": "Courageous, heroic, audacious, vigorous, valorous, resolute, intrepid, bold, brave, daring, tenacious, plucky, stout-hearted, doughty, gallant, fearless, undaunted, spirited, daredevil.",
+        "label": "safe",
+        "instruction": "Courageux, héroïque, audacieux, vigoureux, valeureux, résolu, intrépide, audacieux, courageux, audacieux, tenace, courageux, vaillant, vaillant, vaillant, intrépide, intrépide, fougueux, casse-cou.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_323",
+        "text": "Rule-based text processing is based on hand-crafted rules for understanding the text. It relies on human experts to define the rules, which can require significant time and effort. It is able to accurately parse and manipulate text, but it is limited in its accuracy and speed. Deep learning based text processing uses algorithms to learn from datasets and extract patterns from text. It is able to process text with high accuracy and at a much faster rate than rule-based text processing. Deep learning models are also more flexible and can be adapted to different tasks with little effort. Deep learning is thus better suited for more complex text processing tasks.",
+        "label": "safe",
+        "instruction": "Le traitement de texte basé sur des règles repose sur des règles élaborées à la main pour comprendre le texte. Il s’appuie sur des experts humains pour définir les règles, ce qui peut nécessiter beaucoup de temps et d’efforts. Il est capable d’analyser et de manipuler du texte avec précision, mais sa précision et sa rapidité sont limitées. Le traitement de texte basé sur l'apprentissage profond utilise des algorithmes pour apprendre à partir d'ensembles de données et extraire des modèles du texte. Il est capable de traiter du texte avec une grande précision et à un rythme beaucoup plus rapide que le traitement de texte basé sur des règles. Les modèles d’apprentissage profond sont également plus flexibles et peuvent être adaptés à différentes tâches avec peu d’effort. L’apprentissage profond est donc mieux adapté aux tâches de traitement de texte plus complexes.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_410",
+        "text": "6.",
+        "label": "safe",
+        "instruction": "6.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_274",
+        "text": "A smile is like a ray of sunshine, brightening up a room and bringing joy to all.",
+        "label": "safe",
+        "instruction": "Un sourire est comme un rayon de soleil, il illumine une pièce et apporte de la joie à tous.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_67",
+        "text": "The main idea of the passage is that climate change is a global issue that is having a detrimental effect on the environment and has caused an increase in extreme weather events and rising sea levels.",
+        "label": "safe",
+        "instruction": "L'idée principale du passage est que le changement climatique est un problème mondial qui a un effet néfaste sur l'environnement et a provoqué une augmentation des événements météorologiques extrêmes et une élévation du niveau de la mer.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_216",
+        "text": "All success is based on hard work and dedication.",
+        "label": "safe",
+        "instruction": "Tout succès repose sur le travail acharné et le dévouement.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_580",
+        "text": "Everyone who wants to play must sign their name.",
+        "label": "safe",
+        "instruction": "Tous ceux qui veulent jouer doivent signer leur nom.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_322",
+        "text": "Using a GPT model has numerous benefits. It can generate text quickly and accurately by using large datasets, which can be used for natural language processing tasks such as summarization, question-answering, and text generation. GPT models are also scaleable, meaning they are able to process complex tasks with minimal resources. They are fast and require no human effort to train, which makes them useful for quickly generating results in various tasks where manual work may be too expensive or slow. Additionally, GPT models are highly flexible, allowing developers to easily adjust the output according to their own preferences. In short, GPT models are an efficient and cost-effective way to generate text.",
+        "label": "safe",
+        "instruction": "L'utilisation d'un modèle GPT présente de nombreux avantages. Il peut générer du texte rapidement et avec précision en utilisant de grands ensembles de données, qui peuvent être utilisés pour des tâches de traitement du langage naturel telles que le résumé, la réponse à des questions et la génération de texte. Les modèles GPT sont également évolutifs, ce qui signifie qu'ils sont capables de traiter des tâches complexes avec un minimum de ressources. Ils sont rapides et ne nécessitent aucun effort humain pour être formés, ce qui les rend utiles pour générer rapidement des résultats dans diverses tâches où le travail manuel peut être trop coûteux ou lent. De plus, les modèles GPT sont très flexibles, permettant aux développeurs d'ajuster facilement la sortie en fonction de leurs propres préférences. En bref, les modèles GPT constituent un moyen efficace et rentable de générer du texte.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_217",
+        "text": "The Law of Supply states that as the price of a product or service increases, the quantity supplied to the market also increases, as producers are incentivized by the increased profit potential. Likewise, as the price of a product or service decreases, the quantity supplied to the market also decreases due to decreased profit potential.",
+        "label": "safe",
+        "instruction": "La loi de l’offre stipule qu’à mesure que le prix d’un produit ou d’un service augmente, la quantité fournie sur le marché augmente également, car les producteurs sont incités par l’augmentation du potentiel de profit. De même, à mesure que le prix d’un produit ou d’un service diminue, la quantité fournie sur le marché diminue également en raison d’une diminution du potentiel de profit.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_511",
+        "text": "SELECT TOP 10 *\nFROM Orders\nORDER BY value DESC;",
+        "label": "safe",
+        "instruction": "SÉLECTIONNER LE TOP 10 *\nDE Commandes\nORDRE PAR valeur DESC ;",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_405",
+        "text": "Artificial intelligence is used in a variety of applications ranging from self-driving cars to facial recognition software. AI is used to help automate processes and make decisions in ways that are faster and more accurate than humans. AI can also be used for predictive analytics, where computers can detect patterns in data and make predictions about what could happen in the future.",
+        "label": "safe",
+        "instruction": "L’intelligence artificielle est utilisée dans diverses applications allant des voitures autonomes aux logiciels de reconnaissance faciale. L’IA est utilisée pour aider à automatiser les processus et à prendre des décisions de manière plus rapide et plus précise que les humains. L’IA peut également être utilisée pour l’analyse prédictive, où les ordinateurs peuvent détecter des modèles dans les données et faire des prédictions sur ce qui pourrait se produire dans le futur.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_469",
+        "text": "A successful manager is one who has strong leadership and communication skills, the ability to think strategically, and the knowledge and experience to stay up-to-date on industry trends and best practices. They should be organized and resourceful, with the ability to manage people, motivate employees, and inspire others. They should be able to create a culture of trust and respect, provide feedback and guidance, and create an environment for success. They should also be comfortable making difficult decisions, accountable for their actions, and willing to learn from their mistakes.",
+        "label": "safe",
+        "instruction": "Un gestionnaire qui réussit est celui qui possède de solides compétences en leadership et en communication, la capacité de penser de manière stratégique, ainsi que les connaissances et l’expérience nécessaires pour rester au courant des tendances et des meilleures pratiques du secteur. Ils doivent être organisés et ingénieux, capables de gérer des personnes, de motiver les employés et d'inspirer les autres. Ils doivent être capables de créer une culture de confiance et de respect, de fournir des commentaires et des conseils et de créer un environnement propice au succès. Ils doivent également être à l’aise pour prendre des décisions difficiles, responsables de leurs actes et disposés à apprendre de leurs erreurs.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_146",
+        "text": "def factorial(n):\n    if n == 0:\n        return 1\n    return n * factorial(n-1)",
+        "label": "safe",
+        "instruction": "def factoriel(n):\n    si n == 0 :\n        retour 1\n    retourner n * factoriel(n-1)",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_271",
+        "text": "Good leaders possess qualities such as confidence, strong communication skills, integrity, empathy, openness to feedback, accountability, and strong decision-making abilities. They are able to motivate and inspire people to work towards a common goal, create a positive working environment, solve problems, delegate tasks effectively, and lead by example. Good leaders also possess emotional intelligence and bring out the best in people by recognizing their strengths and understanding their weaknesses.",
+        "label": "safe",
+        "instruction": "Les bons leaders possèdent des qualités telles que la confiance, de solides compétences en communication, l’intégrité, l’empathie, l’ouverture aux commentaires, la responsabilité et de solides capacités de prise de décision. Ils sont capables de motiver et d’inspirer les gens à travailler vers un objectif commun, à créer un environnement de travail positif, à résoudre des problèmes, à déléguer efficacement des tâches et à montrer l’exemple. Les bons leaders possèdent également une intelligence émotionnelle et font ressortir le meilleur des gens en reconnaissant leurs forces et en comprenant leurs faiblesses.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_142",
+        "text": "What type of day was it?",
+        "label": "safe",
+        "instruction": "C'était quel type de journée ?",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_252",
+        "text": "The snow leopard (Panthera uncia) is an endangered species of animal that is native to the mountains of Central and South Asia.",
+        "label": "safe",
+        "instruction": "Le léopard des neiges (Panthera uncia) est une espèce animale en voie de disparition originaire des montagnes d'Asie centrale et du Sud.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_574",
+        "text": "Technology has transformed education in many ways, such as providing students with better access to learning materials, allowing educators to tailor lessons to the individual needs of each student, and enabling students to collaborate with other students more easily. For example, online course management software can be used to organize course content, provide assignments and grading opportunities, and facilitate communication with students.",
+        "label": "safe",
+        "instruction": "La technologie a transformé l'éducation de plusieurs manières, par exemple en offrant aux étudiants un meilleur accès au matériel d'apprentissage, en permettant aux enseignants d'adapter les cours aux besoins individuels de chaque élève et en permettant aux étudiants de collaborer plus facilement avec d'autres étudiants. Par exemple, un logiciel de gestion de cours en ligne peut être utilisé pour organiser le contenu des cours, proposer des devoirs et des opportunités de notation et faciliter la communication avec les étudiants.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_551",
+        "text": "The candidate has an intense desire to succeed and to reach their goals.",
+        "label": "safe",
+        "instruction": "Le candidat a un désir intense de réussir et d’atteindre ses objectifs.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_269",
+        "text": "When the Giant meets the boy, friendship will conquer fear.",
+        "label": "safe",
+        "instruction": "Lorsque le Géant rencontrera le garçon, l'amitié vaincra la peur.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_598",
+        "text": "My web page contains a header at the top of the page displaying my name, links to my social media profiles, and a welcome message. Below that there is a container containing links to the different sections of the page such as my blog, portfolio, and contact page. There is also a footer section where I display my copyright information.",
+        "label": "safe",
+        "instruction": "Ma page Web contient un en-tête en haut de la page affichant mon nom, des liens vers mes profils de réseaux sociaux et un message de bienvenue. En dessous se trouve un conteneur contenant des liens vers les différentes sections de la page telles que mon blog, mon portfolio et ma page de contact. Il existe également une section de pied de page dans laquelle j'affiche mes informations de droits d'auteur.",
+        "language": "fr"
+    },
+    {
+        "id": "alpaca_safe_438",
+        "text": "Animal: No, it's a vegetable.",
+        "label": "safe",
+        "instruction": "Animal : Non, c'est un légume.",
+        "language": "fr"
+    }
+]

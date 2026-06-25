@@ -24,7 +24,7 @@ def main():
     run_script("05_stage1_generation.py")
     
     # 2. Evaluate behavior using the Meta Llama 3 Evaluation Prompt
-    run_script("06b_confusion_matrix_eval.py")
+    run_script("06c_llamaguard_eval.py")
     
     # 3. Generate behavioral plots (Error Rates, Scatter Plots, Heatmaps)
     run_script("09_generate_plots.py")
@@ -34,6 +34,7 @@ def main():
     run_script("16_linear_probe_master.py")
     
     # 5. Masterstrokes
+    run_script("18_layer_by_layer_ablated.py")
     run_script("19_layer_by_layer_original.py")
     run_script("20_cosine_similarity.py")
     run_script("21_perplexity_eval.py")

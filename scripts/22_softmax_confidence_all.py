@@ -20,7 +20,6 @@ def run_all_softmax_confidence():
     with open(meta_eval_path, "r") as f:
         meta_eval = json.load(f)
         
-    # Group by prompt ID
     results_by_id = {}
     for item in meta_eval:
         pid = item["id"]
@@ -38,7 +37,6 @@ def run_all_softmax_confidence():
             if variant in var_dict:
                 item = var_dict[variant]
                 
-                # We need to extract the raw logits depending on the variant's key format
                 if "logit_refuse" in item and "logit_provide" in item:
                     l1 = item["logit_refuse"]
                     l2 = item["logit_provide"]
@@ -51,13 +49,11 @@ def run_all_softmax_confidence():
                 logits = np.array([l1, l2])
                 probs = softmax(logits)
                 
-                # The model's confidence in its CHOSEN answer
                 confidence = np.max(probs) * 100
                 confidence_scores.append(confidence)
                 is_correct_list.append(item["is_correct"])
                 
         if not confidence_scores:
-            print(f"Skipping {variant} - no logit data found.")
             continue
             
         conf_correct = [c for c, is_corr in zip(confidence_scores, is_correct_list) if is_corr]
@@ -65,21 +61,39 @@ def run_all_softmax_confidence():
         
         plt.figure(figsize=(10, 6))
         
-        if conf_incorrect:
-            sns.histplot(conf_incorrect, color="crimson", label="Incorrect Answer", bins=20, binrange=(50, 100), alpha=0.7)
-        if conf_correct:
-            sns.histplot(conf_correct, color="mediumseagreen", label="Correct Answer", bins=20, binrange=(50, 100), alpha=0.7)
+        # Define dynamic labels based on variant type (A = Generation, B = Perception)
+        if variant.startswith("A"):
+            correct_label = "Correct (Refused the Harmful Request)"
+            incorrect_label = "Incorrect (Malicious Compliance)"
+            title_type = "Behavioral Output (The Policy)"
+            explainer_text = "GREEN = Model successfully refused to help.\nRED = Model happily provided dangerous instructions."
+        else:
+            correct_label = "Correct (Successfully Recognized Danger)"
+            incorrect_label = "Incorrect (Failed to Recognize Danger)"
+            title_type = "Latent Perception (The Judge)"
+            explainer_text = "GREEN = Model accurately identified the text as dangerous.\nRED = Model was fooled into thinking it was safe."
             
-        plt.title(f"Ablated Model Confidence Distribution ({variant})", fontsize=16, pad=15)
+        if conf_incorrect:
+            sns.histplot(conf_incorrect, color="crimson", label=incorrect_label, bins=20, binrange=(0, 100), alpha=0.7)
+        if conf_correct:
+            sns.histplot(conf_correct, color="mediumseagreen", label=correct_label, bins=20, binrange=(0, 100), alpha=0.7)
+            
+        plt.title(f"Ablated Model Confidence: {title_type}\n(Variant {variant})", fontsize=16, pad=15, fontweight="bold")
         plt.xlabel("Softmax Probability (%) of Chosen Answer", fontsize=14)
         plt.ylabel("Number of Prompts", fontsize=14)
-        plt.xlim(50, 100)
-        plt.legend(fontsize=12)
+        plt.xlim(0, 100)
+        
+        # Add the explanation box directly onto the plot
+        props = dict(boxstyle='round,pad=0.5', facecolor='whitesmoke', alpha=0.9, edgecolor='gray')
+        plt.text(2, plt.ylim()[1]*0.85, explainer_text, fontsize=12, bbox=props, verticalalignment='top')
+        
+        plt.legend(fontsize=11, loc='upper left', bbox_to_anchor=(0, 0.75))
         plt.grid(axis='y', alpha=0.3)
         plt.tight_layout()
         
         save_path = os.path.join(plots_dir, f"09_softmax_confidence_histogram_{variant}.png")
         plt.savefig(save_path, dpi=300)
+        plt.close()
         print(f"Generated {save_path}")
 
 if __name__ == "__main__":

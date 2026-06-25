@@ -1,0 +1,27 @@
+MASTER LATENT SPACE LINEAR PROBING RESULTS (ALL 6 VARIANTS)
+============================================================
+
+Variant A1:
+  Accuracy: 97.18%
+  ROC AUC:  0.996
+
+Variant A2:
+  Accuracy: 97.42%
+  ROC AUC:  0.996
+
+Variant A3:
+  Accuracy: 97.82%
+  ROC AUC:  0.994
+
+Variant B1:
+  Accuracy: 97.90%
+  ROC AUC:  0.997
+
+Variant B2:
+  Accuracy: 97.90%
+  ROC AUC:  0.996
+
+Variant B3:
+  Accuracy: 97.58%
+  ROC AUC:  0.996
+
