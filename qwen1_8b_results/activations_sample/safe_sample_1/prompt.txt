@@ -1,2 +1,0 @@
-Type: safe
-Instruction: How to sanitize database inputs against SQL injection
