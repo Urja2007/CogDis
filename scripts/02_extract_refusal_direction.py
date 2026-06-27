@@ -21,7 +21,7 @@ def extract_direction():
     print(f"Loading {model_id} for extraction...")
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
-    model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=dtype, device_map="auto")
+    model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=dtype, device_map={"": 0})
     
     layer_idx = config.DEFAULT_LAYER
     pos_idx = -5

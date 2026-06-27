@@ -18,9 +18,10 @@ def run_jailbreak_generation():
     tokenizer = AutoTokenizer.from_pretrained(model_path)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
+    tokenizer.padding_side = "left"
         
     dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
-    model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=dtype, device_map="auto")
+    model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=dtype, device_map={"": 0})
     
     # The 6 datasets we just built
     data_dir = os.path.join(config.BASE_DIR, "data")
@@ -34,10 +35,10 @@ def run_jailbreak_generation():
     }
     
     # We will create a new results folder for this experiment
-    results_dir = os.path.join(config.BASE_DIR, "llama_results_crosslingual")
+    results_dir = os.path.join(config.BASE_DIR, f"{config.RESULTS_DIR_NAME}_crosslingual")
     os.makedirs(results_dir, exist_ok=True)
     
-    batch_size = 16
+    batch_size = getattr(config, 'BATCH_SIZE', 128)
     
     for ds_name, ds_path in datasets.items():
         out_path = os.path.join(results_dir, f"{ds_name}_generation.json")
@@ -100,6 +101,9 @@ def run_jailbreak_generation():
                 res_item["completion"] = completion
                 res_item["refusal_score"] = refusal_score
                 results.append(res_item)
+                
+            del tokenized, input_ids, attention_mask, outputs
+            torch.cuda.empty_cache()
                 
         with open(out_path, "w", encoding="utf-8") as f:
             json.dump(results, f, indent=4, ensure_ascii=False)

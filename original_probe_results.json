@@ -1,0 +1,32 @@
+[
+  {
+    "Model": "Original Model",
+    "Variant": "A1",
+    "Accuracy (%)": 97.66
+  },
+  {
+    "Model": "Original Model",
+    "Variant": "A2",
+    "Accuracy (%)": 97.66
+  },
+  {
+    "Model": "Original Model",
+    "Variant": "A3",
+    "Accuracy (%)": 97.50
+  },
+  {
+    "Model": "Original Model",
+    "Variant": "B1",
+    "Accuracy (%)": 97.82
+  },
+  {
+    "Model": "Original Model",
+    "Variant": "B2",
+    "Accuracy (%)": 97.82
+  },
+  {
+    "Model": "Original Model",
+    "Variant": "B3",
+    "Accuracy (%)": 97.98
+  }
+]

@@ -25,18 +25,6 @@ def check_refusal(text):
     return 0
 
 def generate_responses(model_path, prompts_data, output_file):
-    print(f"\nLoading model from {model_path}...")
-    tokenizer = AutoTokenizer.from_pretrained(model_path)
-    if tokenizer.pad_token is None:
-        tokenizer.pad_token = tokenizer.eos_token
-    tokenizer.padding_side = "left"
-    
-    dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
-    model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=dtype, device_map="auto")
-    
-    batch_size = getattr(config, 'BATCH_SIZE', 1)
-    print(f"Generating for {len(prompts_data)} prompts (Batch Size = {batch_size})...")
-    
     results = []
     if os.path.exists(output_file):
         try:
@@ -48,6 +36,22 @@ def generate_responses(model_path, prompts_data, output_file):
             
     completed_ids = {r["prompt_id"] for r in results}
     prompts_to_do = [p for p in prompts_data if p.get("id", p.get("prompt_id", "unknown")) not in completed_ids]
+    
+    if not prompts_to_do:
+        print(f"All prompts completed for {output_file}!")
+        return
+
+    print(f"\nLoading model from {model_path}...")
+    tokenizer = AutoTokenizer.from_pretrained(model_path)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+    tokenizer.padding_side = "left"
+    
+    dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
+    model = AutoModelForCausalLM.from_pretrained(model_path, torch_dtype=dtype, device_map={"": 0})
+    
+    batch_size = getattr(config, 'BATCH_SIZE', 1)
+    print(f"Generating for {len(prompts_to_do)} prompts (Batch Size = {batch_size})...")
     
     for i in range(0, len(prompts_to_do), batch_size):
         batch_items = prompts_to_do[i:i+batch_size]
@@ -107,12 +111,12 @@ def run_stage1():
     results_dir = config.get_results_dir()
     os.makedirs(results_dir, exist_ok=True)
     
-    # 1. Original Model
-    generate_responses(
-        config.MODEL_ID,
-        prompts_data,
-        os.path.join(results_dir, "original_generation.json")
-    )
+    # 1. Original Model (Skipped to save time since it's already generated!)
+    # generate_responses(
+    #    config.MODEL_ID,
+    #    prompts_data,
+    #    os.path.join(results_dir, "original_generation.json")
+    # )
     
     # 2. Ablated Model
     ablated_dir = config.get_ablated_model_dir()

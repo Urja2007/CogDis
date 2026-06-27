@@ -12,22 +12,31 @@ import pandas as pd
 import seaborn as sns
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
+from tqdm import tqdm
 
 import config
 
 def run_all_probes():
-    try:
-        from device_utils import print_hardware_info
-        print_hardware_info()
-    except ImportError:
-        pass
-
     results_dir = config.get_results_dir()
-    plots_dir = os.path.join(results_dir, "plots")
-    os.makedirs(plots_dir, exist_ok=True)
     
-    ablated_gen_path = os.path.join(results_dir, "ablated_generation.json")
-    ablated_safe_path = os.path.join(results_dir, "ablated_harmless_generation.json")
+    # EXACT FOLDER STRUCTURE REQUESTED BY USER
+    latent_dir = os.path.join(results_dir, "plots", "Latent_knowledge")
+    dirs = {
+        "pca": os.path.join(latent_dir, "latent_space_pca"),
+        "tsne": os.path.join(latent_dir, "latent_space_tsne"),
+        "roc": os.path.join(latent_dir, "latent_roc_curve"),
+        "cm": os.path.join(latent_dir, "latent_confusion_matrix")
+    }
+    for d in dirs.values():
+        os.makedirs(d, exist_ok=True)
+    
+    ablated_gen_path = os.path.join(results_dir, "generations", "ablated_generation.json")
+    if not os.path.exists(ablated_gen_path):
+        ablated_gen_path = os.path.join(results_dir, "ablated_generation.json")
+        
+    ablated_safe_path = os.path.join(results_dir, "generations", "ablated_harmless_generation.json")
+    if not os.path.exists(ablated_safe_path):
+        ablated_safe_path = os.path.join(results_dir, "ablated_harmless_generation.json")
     
     with open(ablated_gen_path, "r") as f:
         ablated_generated = json.load(f)
@@ -45,6 +54,9 @@ def run_all_probes():
     
     model_path = config.get_ablated_model_dir()
     tokenizer = AutoTokenizer.from_pretrained(model_path)
+    tokenizer.pad_token = tokenizer.eos_token
+    tokenizer.padding_side = 'left'
+    
     print("Loading model...")
     model = AutoModelForCausalLM.from_pretrained(
         model_path,
@@ -62,36 +74,43 @@ def run_all_probes():
     }
 
     final_results = {}
+    BATCH_SIZE = 32
     
     for v_name, template in variants.items():
         print(f"\n======================================")
         print(f"Running Latent Space Probe for Variant {v_name}")
-        print(f"======================================")
         
         X = []
         y = []
         
-        for i, item in enumerate(eval_dataset):
-            if i % 200 == 0:
-                print(f"Processed {i}/{len(eval_dataset)}")
+        # Batch Processing for Massive Speedup
+        for i in tqdm(range(0, len(eval_dataset), BATCH_SIZE)):
+            batch = eval_dataset[i:i+BATCH_SIZE]
+            
+            chat_texts = []
+            for item in batch:
+                prompt = template.replace("{text}", item["text"])
+                messages = [{"role": "user", "content": prompt}]
+                chat_texts.append(tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True))
+                y.append(1 if item["true_label"] == "Harmful" else 0)
                 
-            text = item["text"]
-            if not text:
-                continue
-                
-            prompt = template.replace("{text}", text)
-            messages = [{"role": "user", "content": prompt}]
-            chat_text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-            inputs = tokenizer(chat_text, return_tensors="pt").to(model.device)
+            inputs = tokenizer(chat_texts, return_tensors="pt", padding=True, truncation=True, max_length=1024).to(model.device)
             
             with torch.no_grad():
                 outputs = model(**inputs)
-                final_hidden_state = outputs.hidden_states[-1][0, -1, :]
+                # Take the last token of the last layer for each sequence in the batch
+                # To account for padding on the left, we can just take the true last token by using sequence lengths
+                seq_lengths = (inputs.attention_mask != 0).sum(dim=1) - 1
+                batch_hidden = outputs.hidden_states[-1]
                 
-            X.append(final_hidden_state.cpu().numpy())
-            y.append(1 if item["true_label"] == "Harmful" else 0)
+                final_states = []
+                for b_idx, seq_len in enumerate(seq_lengths):
+                    final_states.append(batch_hidden[b_idx, seq_len, :].cpu().numpy())
+                    
+                X.extend(final_states)
             
             del inputs, outputs
+            torch.cuda.empty_cache()
             
         X = np.array(X)
         y = np.array(y)
@@ -99,7 +118,6 @@ def run_all_probes():
         print("Training Logistic Regression Probe...")
         skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
         accuracies = []
-        
         y_preds_all = np.zeros_like(y)
         y_proba_all = np.zeros_like(y, dtype=float)
         
@@ -120,16 +138,11 @@ def run_all_probes():
             accuracies.append(accuracy_score(y_test, preds))
             
         avg_accuracy = np.mean(accuracies) * 100
-        print(f"Accuracy for {v_name}: {avg_accuracy:.2f}%")
+        roc_auc = auc(*roc_curve(y, y_proba_all)[:2])
+        final_results[v_name] = {"accuracy": avg_accuracy, "auc": roc_auc}
         
+        # 1. Plot ROC Curve
         fpr, tpr, _ = roc_curve(y, y_proba_all)
-        roc_auc = auc(fpr, tpr)
-        
-        final_results[v_name] = {
-            "accuracy": avg_accuracy,
-            "auc": roc_auc
-        }
-        
         plt.figure(figsize=(8, 6))
         plt.plot(fpr, tpr, color='darkorange', lw=2, label=f'ROC curve (AUC = {roc_auc:.3f})')
         plt.plot([0, 1], [0, 1], color='navy', lw=2, linestyle='--')
@@ -137,22 +150,24 @@ def run_all_probes():
         plt.ylim([0.0, 1.05])
         plt.xlabel('False Positive Rate')
         plt.ylabel('True Positive Rate')
-        plt.title(f'Receiver Operating Characteristic (Latent Space - {v_name})')
+        plt.title(f'Receiver Operating Characteristic ({v_name})')
         plt.legend(loc="lower right")
         plt.grid(alpha=0.3)
-        plt.savefig(os.path.join(plots_dir, f"11_latent_roc_curve_{v_name}.png"), dpi=300)
+        plt.savefig(os.path.join(dirs["roc"], f"11_latent_roc_curve_{v_name}.png"), dpi=300)
         plt.close()
         
+        # 2. Plot Confusion Matrix
         cm = confusion_matrix(y, y_preds_all)
         plt.figure(figsize=(7, 6))
         sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
                     xticklabels=['Predicted Safe', 'Predicted Harmful'],
                     yticklabels=['True Safe', 'True Harmful'])
-        plt.title(f'Latent Space Linear Probe: Confusion Matrix ({v_name})')
+        plt.title(f'Latent Probe: Confusion Matrix ({v_name})')
         plt.tight_layout()
-        plt.savefig(os.path.join(plots_dir, f"12_latent_confusion_matrix_{v_name}.png"), dpi=300)
+        plt.savefig(os.path.join(dirs["cm"], f"12_latent_confusion_matrix_{v_name}.png"), dpi=300)
         plt.close()
 
+        # 3. PCA Projection
         pca = PCA(n_components=2)
         X_pca = pca.fit_transform(X)
         df_pca = pd.DataFrame({
@@ -163,13 +178,14 @@ def run_all_probes():
         plt.figure(figsize=(10, 8))
         palette = {"Harmful": "crimson", "Safe": "mediumseagreen"}
         sns.scatterplot(data=df_pca, x="PCA Component 1", y="PCA Component 2", hue="Concept", palette=palette, alpha=0.7, edgecolor='w', s=60)
-        plt.title(f"Ablated Model's Latent Space (PCA Projection) - {v_name}", fontsize=16, pad=15)
+        plt.title(f"Ablated Model's Latent Space (PCA) - {v_name}", fontsize=16, pad=15)
         plt.legend(title="Internal Concept")
         plt.grid(alpha=0.3)
         plt.tight_layout()
-        plt.savefig(os.path.join(plots_dir, f"10_latent_space_pca_{v_name}.png"), dpi=300)
+        plt.savefig(os.path.join(dirs["pca"], f"10_latent_space_pca_{v_name}.png"), dpi=300)
         plt.close()
         
+        # 4. t-SNE Projection
         tsne = TSNE(n_components=2, perplexity=30, random_state=42)
         X_tsne = tsne.fit_transform(X)
         df_tsne = pd.DataFrame({
@@ -179,21 +195,18 @@ def run_all_probes():
         })
         plt.figure(figsize=(10, 8))
         sns.scatterplot(data=df_tsne, x="t-SNE Dimension 1", y="t-SNE Dimension 2", hue="Concept", palette=palette, alpha=0.7, edgecolor='w', s=60)
-        plt.title(f"Ablated Model's Latent Space (t-SNE Projection) - {v_name}", fontsize=16, pad=15)
+        plt.title(f"Ablated Model's Latent Space (t-SNE) - {v_name}", fontsize=16, pad=15)
         plt.legend(title="Internal Concept")
         plt.grid(alpha=0.3)
         plt.tight_layout()
-        plt.savefig(os.path.join(plots_dir, f"13_latent_space_tsne_{v_name}.png"), dpi=300)
+        plt.savefig(os.path.join(dirs["tsne"], f"13_latent_space_tsne_{v_name}.png"), dpi=300)
         plt.close()
         
     summary_path = os.path.join(results_dir, "10_linear_probe_results_remaining.txt")
     with open(summary_path, "w") as f:
-        f.write("Latent Space Linear Probing Results (A2, A3, B2, B3)\n")
-        f.write("====================================================\n\n")
+        f.write("Latent Space Linear Probing Results\n")
         for v_name, res in final_results.items():
-            f.write(f"Variant {v_name}:\n")
-            f.write(f"  Accuracy: {res['accuracy']:.2f}%\n")
-            f.write(f"  ROC AUC:  {res['auc']:.3f}\n\n")
+            f.write(f"Variant {v_name}: Accuracy: {res['accuracy']:.2f}%, AUC: {res['auc']:.3f}\n")
 
 if __name__ == "__main__":
     run_all_probes()

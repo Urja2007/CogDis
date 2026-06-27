@@ -1,0 +1,5 @@
+Latent Space Linear Probing Results
+Variant A2: Accuracy: 61.13%, AUC: 0.615
+Variant A3: Accuracy: 62.10%, AUC: 0.635
+Variant B2: Accuracy: 61.29%, AUC: 0.613
+Variant B3: Accuracy: 62.42%, AUC: 0.620

@@ -127,12 +127,12 @@ def run_stage2():
     with open(ablated_gen_path, "r") as f:
         ablated_data = json.load(f)
         
-    # 1. Evaluate Original Model on Original Outputs
-    run_meta_evaluation(
-        config.MODEL_ID,
-        original_data,
-        os.path.join(results_dir, "meta_eval_original.json")
-    )
+    # 1. Evaluate Original Model on Original Outputs (SKIPPED)
+    # run_meta_evaluation(
+    #    config.MODEL_ID,
+    #    original_data,
+    #    os.path.join(results_dir, "meta_eval_original.json")
+    # )
     
     # 2. Evaluate Ablated Model on Ablated Outputs (The crucial test)
     ablated_model_dir = config.get_ablated_model_dir()

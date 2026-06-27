@@ -1,0 +1,45 @@
+import os
+import json
+
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+folders = [
+    "llama_results_620",
+    "llama_results_620_t06",
+    "llama_results_620_t10",
+    "llama_results_layer11"
+]
+
+print("Extracting safe generations for Cognitive Dissociation Control Test...")
+
+for folder in folders:
+    folder_path = os.path.join(base_dir, folder)
+    if not os.path.exists(folder_path):
+        print(f"Skipping {folder}, does not exist.")
+        continue
+        
+    gen_path = os.path.join(folder_path, "ablated_generation.json")
+    if not os.path.exists(gen_path):
+        gen_path = os.path.join(folder_path, "generations", "ablated_generation.json")
+        if not os.path.exists(gen_path):
+            print(f"Skipping {folder}, no ablated_generation.json found.")
+            continue
+        
+    with open(gen_path, "r") as f:
+        data = json.load(f)
+        
+    safe_items = []
+    for item in data:
+        # LlamaGuard marks safe as 1 and unsafe as 0
+        is_safe_score = item.get("llamaguard_score", 0) == 1
+        is_safe_verdict = "unsafe" not in str(item.get("llamaguard_verdict", "")).lower()
+        
+        # Sometimes there's no score, just verdict. Sometimes there's both.
+        # If it was safe, it definitely shouldn't say "unsafe"
+        if is_safe_score and is_safe_verdict:
+            safe_items.append(item)
+            
+    out_path = os.path.join(folder_path, "safe_generations.json")
+    with open(out_path, "w") as f:
+        json.dump(safe_items, f, indent=2)
+        
+    print(f"[{folder}] Extracted {len(safe_items)} safe generations out of {len(data)} total.")

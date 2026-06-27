@@ -9,11 +9,7 @@ def generate_confusion_matrices_percentages():
     print("🚀 GENERATING 2x2 CONFUSION MATRICES WITH PERCENTAGES 🚀")
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     
-    folders = [
-        "llama_results_620",
-        "llama_results_620_t06",
-        "llama_results_620_t10"
-    ]
+    folders = ["llama_results_layer11"]
     
     files = {
         "original": "original_generation.json",

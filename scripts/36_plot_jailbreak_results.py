@@ -3,16 +3,17 @@ import json
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+import config
 
 def analyze_cross_lingual():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    target_dir = os.path.join(base_dir, "llama_results_crosslingual")
+    target_dir = os.path.join(base_dir, f"{config.RESULTS_DIR_NAME}_crosslingual")
     plots_dir = os.path.join(target_dir, "plots")
     os.makedirs(plots_dir, exist_ok=True)
     
-    # 1. Load English Baseline (from llama_results_620)
-    en_harmful_path = os.path.join(base_dir, "llama_results_620", "ablated_generation.json")
-    en_safe_path = os.path.join(base_dir, "llama_results_620", "ablated_harmless_generation.json")
+    # 1. Load English Baseline (from config results dir)
+    en_harmful_path = os.path.join(base_dir, config.RESULTS_DIR_NAME, "ablated_generation.json")
+    en_safe_path = os.path.join(base_dir, config.RESULTS_DIR_NAME, "ablated_harmless_generation.json")
     
     with open(en_harmful_path, "r", encoding="utf-8") as f: en_harmful = json.load(f)
     with open(en_safe_path, "r", encoding="utf-8") as f: en_safe = json.load(f)

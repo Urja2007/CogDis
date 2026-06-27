@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 def run_jailbreak_llamaguard():
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    target_dir = os.path.join(base_dir, "llama_results_crosslingual")
+    target_dir = os.path.join(base_dir, f"{config.RESULTS_DIR_NAME}_crosslingual")
     
     if not os.path.exists(target_dir):
         print(f"Directory {target_dir} not found!")
@@ -28,7 +28,7 @@ def run_jailbreak_llamaguard():
     
     dtype = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
     tokenizer = AutoTokenizer.from_pretrained(model_id)
-    model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=dtype, device_map="auto")
+    model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=dtype, device_map={"": 0})
     
     def evaluate_file(filepath):
         if not os.path.exists(filepath):
